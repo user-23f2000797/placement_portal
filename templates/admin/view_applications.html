@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Applications</title>
+</head>
+<body>
+
+<h2>All Placement Applications</h2>
+
+<table border="1" cellpadding="6">
+  <tr>
+    <th>Student Name</th>
+    <th>Student Email</th>
+    <th>Company</th>
+    <th>Job Title</th>
+    <th>Applied Date</th>
+    <th>Status</th>
+  </tr>
+
+  {% for app in applications %}
+  <tr>
+    <td>{{ app.student.name }}</td>
+    <td>{{ app.student.email }}</td>
+    <td>{{ app.drive.company.company_name }}</td>
+    <td>{{ app.drive.job_title }}</td>
+    <td>{{ app.application_date.strftime('%d-%m-%Y') }}</td>
+    <td>{{ app.status }}</td>
+  </tr>
+  {% endfor %}
+  
+</table>
+
+<br>
+<a href="{{ url_for('admin.dashboard') }}">⬅ Back to Dashboard</a>
+
+</body>
+</html>
