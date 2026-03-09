@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Application</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <!-- Card Header -->
+                <div class="card-header bg-light text-center">
+                    <h4 class="mb-0">Student Application</h4>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+
+                    <!-- Student Details -->
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-semibold">Student Name</div>
+                        <div class="col-md-8">{{ student.name }}</div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-semibold">Department</div>
+                        <div class="col-md-8">{{ student.department }}</div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-semibold">Email</div>
+                        <div class="col-md-8">
+                            <a href="mailto:{{ student.email }}">{{ student.email }}</a>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Drive Details -->
+                    <div class="row mb-2">
+                        <div class="col-md-4 fw-semibold">Drive</div>
+                        <div class="col-md-8">{{ application.drive.drive_name }}</div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-semibold">Job Title</div>
+                        <div class="col-md-8">{{ application.drive.job_title }}</div>
+                    </div>
+
+
+                    <!-- Update Status Form -->
+                    <form action="{{ url_for('company.update_application_status', id=application.id) }}" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Update Application Status</label>
+
+                            <select name="status" class="form-select">
+
+                                <option value="Shortlisted">Shortlist</option>
+                                <option value="Rejected">Reject</option>
+                                <option value="Waiting">Waiting</option>
+
+                            </select>
+                        </div>
+
+
+                        <div class="d-flex justify-content-between">
+
+                            <a href="{{ url_for('company.view_applications', drive_id=application.drive_id) }}"
+                               class="btn btn-outline-secondary">
+
+                                Back to Applications
+
+                            </a>
+
+                            <button type="submit" class="btn btn-primary">
+                                Update Status
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div> <!-- End Card Body -->
+
+            </div> <!-- End Card -->
+
+        </div> <!-- End Column -->
+
+    </div> <!-- End Row -->
+
+</div> <!-- End Container -->
+
+</body>
+
+</html>
