@@ -20,6 +20,8 @@ class Student(UserMixin,db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     phone = db.Column(db.String(15))
     course = db.Column(db.String(100))
+    institution = db.Column(db.String(150))
+    department = db.Column(db.String(100))
     year = db.Column(db.String(20))
     password = db.Column(db.String(150), nullable=False)
     is_blacklisted = db.Column(db.Boolean, default=False)
@@ -31,6 +33,7 @@ class Company(UserMixin,db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
     company_name = db.Column(db.String(150), nullable=False)
+    description = db.Column(db.Text)
     hr_contact = db.Column(db.String(100))
     website = db.Column(db.String(150))
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -44,21 +47,24 @@ class Company(UserMixin,db.Model):
     def get_id(self):
         return f"Company-{self.id}"
     
-class PlacementDrive(db.Model):
+class PlacementDrive(db.Model): 
     __tablename__ = 'placement_drives'
 
     id = db.Column(db.Integer, primary_key=True)
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
 
+    drive_name= db.Column(db.String(150), nullable=False)
     job_title = db.Column(db.String(150), nullable=False)
     job_description = db.Column(db.Text)
     eligibility = db.Column(db.String(200))
     application_deadline = db.Column(db.Date)
-    status = db.Column(db.String(20), default='Pending')  
+    salary = db.Column(db.String(100))
+    location = db.Column(db.String(150))
+    status = db.Column(db.String(20), default='Active')  
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     applications = db.relationship('Application', backref='drive', lazy=True)
-
+    
 class Application(db.Model):
     __tablename__ = 'applications'
 
@@ -69,6 +75,8 @@ class Application(db.Model):
     application_date = db.Column(db.DateTime, default=datetime.utcnow)
     status = db.Column(db.String(20), default='Applied')
 
+    student = db.relationship('Student', backref='applications')
+    
     __table_args__ = (
         db.UniqueConstraint('student_id', 'drive_id', name='unique_student_drive'),
     )
