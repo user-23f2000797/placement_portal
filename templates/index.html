@@ -1,13 +1,187 @@
 <!DOCTYPE html>
-<html> 
+<html lang="en">
+
 <head>
+
+    <!-- ================= META ================= -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+
+    <!-- ================= TITLE ================= -->
+    <title>Placement Nexus</title>
+
+    <!-- ================= BOOTSTRAP ================= -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
-<body>
-<p align="center" fontsize="200">Placement Nexus</p>
-<a href="{{ url_for('auth.login') }}">Login</a>
-<a href="{{ url_for('auth.register') }}">Register</a>
+
+<body class="bg-light">
+
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+
+        <div class="container">
+
+            <!-- Brand -->
+            <a class="navbar-brand fw-bold text-primary">
+                Placement Nexus
+            </a> 
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ================= HERO SECTION ================= -->
+    <div class="container text-center mt-5">
+
+        <h1 class="display-5 fw-bold text-primary mb-3">
+
+            Welcome to Placement Nexus
+
+        </h1>
+
+        <p class="lead text-muted">
+
+            Placement Nexus is a centralized platform that connects students, companies,
+            and administrators to manage campus placements efficiently. Students can
+            explore job opportunities, companies can recruit talented candidates,
+            and administrators can manage the placement process.
+
+        </p>
+
+        <!-- Action Buttons -->
+        <div class="mt-4">
+
+            <a href="{{ url_for('auth.login') }}"
+               class="btn btn-success btn-lg me-3">
+
+               Login to Continue
+
+            </a>
+
+            <a href="{{ url_for('auth.register') }}"
+               class="btn btn-outline-dark btn-lg">
+
+               Create Account
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FEATURES SECTION ================= -->
+    <div class="container mt-5">
+
+        <div class="row text-center">
+
+
+            <!-- Student Feature -->
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title text-primary">
+
+                            Students
+
+                        </h5>
+
+                        <p class="card-text">
+
+                            Students can register, explore placement drives,
+                            apply to companies, and track their application status.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Company Feature -->
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title text-success">
+
+                            Companies
+
+                        </h5>
+
+                        <p class="card-text">
+
+                            Companies can register, create placement drives,
+                            review student applications, and hire talented candidates.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Admin Feature -->
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title text-warning">
+
+                            Admin Panel
+
+                        </h5>
+
+                        <p class="card-text">
+
+                            Administrators manage company approvals,
+                            monitor placement drives, and maintain placement statistics.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="text-center mt-5 mb-3 text-muted">
+
+        <p>
+
+            Placement Nexus © 2026
+
+        </p>
+
+    </footer>
+
+
 </body>
 </html>

@@ -1,77 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
+    <!-- ================= META ================= -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results</title>
+    <title>Statistics</title>
+    <!-- ================= BOOTSTRAP ================= -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- ================= CHART JS ================= -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <br>
+<body class="bg-light">
+<div class="container mt-4">
+    <!-- ================= HEADER ================= -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-  <div></div><!-- spacer -->
-  <h2 class="m-0 text-left flex-grow-1">Statistics</h2>
-  <div>
-    <a  class="btn btn-outline-primary" href="{{ url_for('admin.dashboard') }}" class="btn btn-link me-2">Back to Dashboard</a>
-    <a class="btn btn-danger" href="{{ url_for('auth.logout') }}" class="btn btn-link">Logout</a>
-  </div>
-</div>
+        <h2 class="fw-bold">Statistics</h2>
+        <div>
+            <a class="btn btn-outline-primary me-2"
+               href="{{ url_for('admin.dashboard') }}">
+                Back to Dashboard
+            </a>
+            <a class="btn btn-danger"
+               href="{{ url_for('auth.logout') }}">
+                Logout
+            </a>
+        </div>
+
+    </div>
+
+
+
+    <!-- ================= STAT CARDS ================= -->
     <div class="row g-3 mb-4">
+
         <div class="col-md-3">
-            <div class="card text-center shadow-sm">
+            <div class="card shadow-sm text-center">
                 <div class="card-body">
                     <h6>Total Students</h6>
-                    <h3 class="text-primary">{{ stats.students }}</h3>
+                    <h3 class="text-primary">
+                        {{ stats.students }}
+                    </h3>
                 </div>
             </div>
         </div>
+
         <div class="col-md-3">
-            <div class="card text-center shadow-sm">
+            <div class="card shadow-sm text-center">
                 <div class="card-body">
                     <h6>Total Companies</h6>
-                    <h3 class="text-success">{{ stats.companies }}</h3>
+                    <h3 class="text-success">
+                        {{ stats.companies }}
+                    </h3>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card text-center shadow-sm">
+            <div class="card shadow-sm text-center">
                 <div class="card-body">
                     <h6>Total Drives</h6>
-                    <h3 class="text-warning">{{ stats.drives }}</h3>
+                    <h3 class="text-warning">
+                        {{ stats.drives }}
+                    </h3>
                 </div>
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="card text-center shadow-sm">
+            <div class="card shadow-sm text-center">
                 <div class="card-body">
                     <h6>Total Applications</h6>
-                    <h3 class="text-danger">{{ stats.applications }}</h3>
+                    <h3 class="text-danger">
+                        {{ stats.applications }}
+                    </h3>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <div class="card shadow-sm mb-4">
-        <div class="card-header bg-light">
-            <h5 class="mb-0">Placement Statistics</h5>
-        </div>
-        <div class="card-body">
-            <p>Selected: {{ stats.selected }}</p>
-            <div class="progress mb-3">
-                <div class="progress-bar bg-success" style="width: {{ (stats.selected / stats.applications * 100)|round(1) }}%;"></div>
-            </div>
-            <p>Rejected: {{ stats.rejected }}</p>
-            <div class="progress mb-3">
-                <div class="progress-bar bg-danger" style="width: {{ (stats.rejected / stats.applications * 100)|round(1) }}%;"></div>
-            </div>
-            <p>Pending: {{ stats.pending }}</p>
-            <div class="progress">
-                <div class="progress-bar bg-warning" style="width: {{ (stats.pending / stats.applications * 100)|round(1) }}%;"></div>
+
+
+    <!-- ================= CHART SECTION ================= -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <div class="card-body d-flex justify-content-center">
+            <div style="width: 550px; height: 260px;">
+                <canvas id="placementChart"></canvas>
             </div>
         </div>
-    </div>
+    
+
+    <script>
+        const ctx = document.getElementById('placementChart').getContext('2d');
+        const statsData = {{ stats|tojson|safe }};
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Pending', 'Selected', 'Rejected'],
+                datasets: [{
+                    label: 'Applications',
+                    data: [statsData.pending, statsData.selected, statsData.rejected],
+                    backgroundColor: ['#17a2b8', '#28a745', '#dc3545'],
+                    borderColor: ['#138496', '#1e7e34', '#c82333'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Application Status (Active Drives)'
+                    },
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
+
+</div>
+
 </body>
 </html>

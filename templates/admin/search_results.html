@@ -87,27 +87,27 @@
 
                                             <small class="text-muted">
                                                 {{ student.email }}
-                                                •
+                                                
                                                 {{ student.course }}
-                                                •
+                                                
                                                 {{ student.year }}
                                             </small>
                                         </div>
-
+                                        <div class="text-end mt-3">
+                                <a
+                                    href="{{ url_for('admin.view_student', id=student.id) }}"
+                                    class="btn btn-sm btn-outline-primary"
+                                >
+                                    View Students
+                                </a>
+                            </div>
                                     </div>
 
                                 {% endfor %}
 
                             </div>
 
-                            <div class="text-end mt-3">
-                                <a
-                                    href="{{ url_for('admin.view_students') }}"
-                                    class="btn btn-sm btn-outline-primary"
-                                >
-                                    View All Students
-                                </a>
-                            </div>
+                            
 
                         </div>
 
@@ -146,21 +146,21 @@
                                                 Status: {{ company.approval_status }}
                                             </small>
                                         </div>
-
+                                        <div class="text-end mt-3">
+                                <a
+                                    href="{{ url_for('admin.view_company', id=company.id) }}"
+                                    class="btn btn-sm btn-outline-primary"
+                                >
+                                    View Company
+                                </a>
+                            </div>
                                     </div>
 
                                 {% endfor %}
 
                             </div>
 
-                            <div class="text-end mt-3">
-                                <a
-                                    href="{{ url_for('admin.manage_companies') }}"
-                                    class="btn btn-sm btn-outline-primary"
-                                >
-                                    View All Companies
-                                </a>
-                            </div>
+                            
 
                         </div>
 

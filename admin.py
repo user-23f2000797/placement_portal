@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import current_user,login_required
 from models import db, Admin, Student, Company , Application, PlacementDrive
 
-#admin blueprint
 admin_bp= Blueprint('admin', __name__,url_prefix='/admin')
 
 #Check if user is admin
@@ -34,6 +33,7 @@ def dashboard():
     )
 
 
+#Search Functionality
 @admin_bp.route('/dashboard/search', methods=['GET','POST'])
 @login_required
 def search_dashboard():
@@ -48,16 +48,31 @@ def search_dashboard():
     drives = []
     if search_query:
         companies = Company.query.filter(Company.company_name.ilike(f"%{search_query}%")).all()
-        print(companies)
         students = Student.query.filter(Student.name.ilike(f"%{search_query}%")).all()
-        print(students)
         drives = PlacementDrive.query.filter(PlacementDrive.drive_name.ilike(f"%{search_query}%")).all()
-        print(drives)
     return render_template('admin/search_results.html',
                          students=students,
                          companies=companies,
                          drives=drives,
                          query=search_query)
+
+#View Student Details on search results
+@admin_bp.route('/view_student/<int:id>')
+@login_required
+def view_student(id):
+    if not admin_required():
+        return redirect(url_for('auth.login'))
+    student = Student.query.get(id)
+    return render_template('admin/view_student.html', student=student)
+
+#View Company Details on search results
+@admin_bp.route('/view_company/<int:id>')
+@login_required
+def view_company(id):
+    if not admin_required():
+        return redirect(url_for('auth.login'))
+    company = Company.query.get(id)
+    return render_template('admin/view_company.html', company=company)
 
 #List Companies
 @admin_bp.route('/companies')
@@ -173,18 +188,18 @@ def blacklist_company(id):
 @admin_bp.route('/statistics')
 @login_required
 def statistics():
+    active_drives = db.session.query(PlacementDrive.id).filter(PlacementDrive.status == 'Active').subquery()
     stats = {
     "students": Student.query.filter_by(is_blacklisted=False).count(),
     "companies": Company.query.filter_by(is_blacklisted=False).count(),
-    "drives": PlacementDrive.query.count(),
-    "applications": Application.query.count(),
-
-    "selected": Application.query.filter_by(status="Selected").count(),
-    "rejected": Application.query.filter_by(status="Rejected").count(),
-    "pending": Application.query.filter_by(status="waiting").count()
+    "drives": PlacementDrive.query.filter_by(status='Active').count(),
+    "applications": Application.query.filter(Application.drive_id.in_(active_drives)).count(),
+    "selected": Application.query.filter_by(status="Shortlisted").filter(Application.drive_id.in_(active_drives)).count(),
+    "rejected": Application.query.filter_by(status="Rejected").filter(Application.drive_id.in_(active_drives)).count(),
+    "pending": Application.query.filter_by(status="Waiting").filter(Application.drive_id.in_(active_drives)).count()
 }
 
-
+    print(stats)
     return render_template(
         "admin/stat.html",
         stats=stats,
