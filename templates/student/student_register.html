@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<form action="/register/student" method="post">
+  <h3>Student Registration</h3>
+    Full Name:
+  <input name="name" placeholder="Name" required><br>
+  <input name="email" placeholder="Email" required>Email <br>
+  <input name="phone" placeholder="Phone">Phone No<br>
+  <input name="course" placeholder="Course">Course<br>
+  <input name="institution" placeholder="Institution">Institute<br>
+  <input name="department" placeholder="Department">Department<br>
+  <input name="year" placeholder="Year">Year<br>
+  <input type="password" name="password" placeholder="Password" required>Set Password<br>
+
+  <button type="submit">Register</button>
+</form>
+</body>
+</html>
+

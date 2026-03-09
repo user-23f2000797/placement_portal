@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Details</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+
+<body class="bg-light">
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="card shadow-sm">
+
+                <!-- Card Header -->
+                <div class="card-header bg-light text-center">
+                    <h4 class="mb-0">Company Details</h4>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+
+                    <!-- Company Information -->
+                    <h5 class="text-primary">
+                        {{ company.company_name }}
+                    </h5>
+
+                    <p class="text-muted">
+                        {{ company.description }}
+                    </p>
+
+
+                    <!-- Drives Table -->
+                    <div class="table-responsive mt-4">
+
+                        <table class="table table-hover align-middle">
+
+                            <thead class="table-light">
+
+                                <tr>
+                                    <th>Drive Name</th>
+                                    <th>Job Title</th>
+                                    <th>More Details</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for d in drives %}
+
+                                <tr>
+
+                                    <td class="fw-semibold">
+                                        {{ d.drive_name }}
+                                    </td>
+
+                                    <td>
+                                        {{ d.job_title }}
+                                    </td>
+
+                                    <td>
+
+                                        <a href="{{ url_for('student.view_drive', drive_id=d.id) }}"
+                                           class="btn btn-sm btn-outline-primary">
+
+                                            View Details
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                    <!-- Back Button -->
+                    <div class="text-center mt-4">
+
+                        <a href="{{ url_for('student.dashboard') }}"
+                           class="btn btn-outline-secondary">
+
+                            Back to Dashboard
+
+                        </a>
+
+                    </div>
+
+                </div> <!-- End Card Body -->
+
+            </div> <!-- End Card -->
+
+        </div> <!-- End Column -->
+
+    </div> <!-- End Row -->
+
+</div> <!-- End Container -->
+
+</body>
+
+</html>
