@@ -6,14 +6,19 @@ from models import db, Admin, Student, Company
 
 auth_bp = Blueprint('auth', __name__)
 
+#Index Page Route
 @auth_bp.route('/')
 def index():
     return render_template('index.html')
 
+
+#Registration Route
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     return render_template('register.html')
 
+
+#Login Route
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -52,6 +57,7 @@ def login():
         flash("Invalid credentials", "danger")
 
     return render_template('login.html')
+
 
 @auth_bp.route('/register/student', methods=['GET', 'POST'])
 def student_register():
