@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title -->
+    <title>Login</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+</head>
+
+
+
+<body class="bg-light">
+
+
+    <!-- Main Container -->
+    <div class="container mt-5">
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-6 col-lg-5">
+
+
+                <!-- Card -->
+                <div class="card shadow-sm">
+
+                    <!-- Card Header -->
+                    <div class="card-header text-center bg-light">
+                        <h4>Login</h4>
+                    </div>
+
+
+
+                    <!-- Card Body -->
+                    <div class="card-body">
+
+
+                        <!-- Flash Messages -->
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+
+                                    <div class="alert alert-{{ category }}">
+                                        {{ message }}
+                                    </div>
+
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+
+
+                        <!-- Login Form -->
+                        <form action="/login" method="post">
+
+
+                            <!-- Role Selection -->
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Login As
+                                </label>
+
+                                <select
+                                    name="role"
+                                    class="form-select"
+                                    required
+                                >
+
+                                    <option value="" disabled selected>
+                                        Select Role
+                                    </option>
+
+                                    <option value="admin">
+                                        Admin
+                                    </option>
+
+                                    <option value="company">
+                                        Company
+                                    </option>
+
+                                    <option value="student">
+                                        Student
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- Email -->
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Email / Username
+                                </label>
+
+                                <input
+                                    type="text"
+                                    name="email"
+                                    class="form-control"
+                                    placeholder="Enter your email"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- Password -->
+                            <div class="mb-3">
+
+                                <label class="form-label">
+                                    Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Enter password"
+                                    required
+                                >
+
+                            </div>
+
+
+
+                            <!-- Login Button -->
+                            <div class="d-grid">
+
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                >
+                                    Login
+                                </button>
+
+                            </div>
+
+
+                        </form>
+
+
+
+                        <hr>
+
+
+
+                        <!-- Register Link -->
+                        <p class="text-center">
+
+                            New User?
+
+                            <a href="{{ url_for('auth.register') }}">
+                                Register here
+                            </a>
+
+                        </p>
+
+
+
+                    </div> <!-- End Card Body -->
+
+
+                </div> <!-- End Card -->
+
+
+            </div> <!-- End Column -->
+
+
+        </div> <!-- End Row -->
+
+
+    </div> <!-- End Container -->
+
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>
