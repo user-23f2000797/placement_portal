@@ -7,6 +7,7 @@ from admin import admin_bp
 from company import company_bp
 from student import student_bp
 
+
 app=Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///placement_portal.db'   
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
